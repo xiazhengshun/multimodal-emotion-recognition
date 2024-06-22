@@ -1,0 +1,46 @@
+common:
+  layers: [12]
+
+  iemocap: False
+  rucm3ed: False
+  casia: False
+
+  #feat_path: /data/shared/zsz01/IEMOCAP_full_release/data/emotion2vec/checkpoint80_iemocap-{}/Session_all
+
+  # rucm3ed_path: /data/shared/zsz01/RUCM3ED/data/emotion2vec/layer-{}
+  # feature_path: /data/shared/zsz01/IEMOCAP_full_release/data/speech/d2v2-base-{}/Session_all
+  feat_path: /hpc_stor03/sjtu_home/zhengshun.xia/need/IEMOCAP_full_release/data/speech/d2v2-base-{}/Session_all
+
+  device: 1
+
+dataset:
+  _name: IEMOCAP
+  test_ratio: 0.2
+  batch_size: 128
+
+optimization:
+  epoch: 100
+  lr: 5e-4
+  weight_decay: 1e-5
+  label_smooth: 0.0
+
+lr_scheduler:
+  _name: ??
+  warmup_updates: ??
+
+model:
+  feat_extractor: emo2vec
+  _name: BaseModel # FusionModel or BaseModel
+  save_dir: /hpc_stor03/sjtu_home/zhengshun.xia/need/codes/emotion-recognition/emo2vec/checkpoints/
+
+  mask_prob: 0.75
+
+defaults:  # disable output
+  - _self_  
+  - override hydra/hydra_logging: disabled  
+  - override hydra/job_logging: disabled  
+  
+hydra:  
+  output_subdir: null  
+  run:  
+    dir: .
